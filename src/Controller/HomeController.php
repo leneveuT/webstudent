@@ -9,7 +9,7 @@ use App\Entity\Home;
 class HomeController extends AbstractController
 {
     /**
-     * @Route("/homes", name="homes")
+     * @Route("/homes", name="home")
      */
     public function index()
     {
@@ -22,7 +22,25 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/homes/{id}", name="home")
+     * @Route("/homes/new", name="home_new")
+     */
+    public function new()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $home = new Home();
+        $home->setCode('SPT');
+        $home->setName("Serpentard");
+
+        $entityManager->persist($home);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('home_show', array('id' => $home->getId()));
+    }
+
+    /**
+     * @Route("/homes/{id}", name="home_show")
      */
     public function show($id)
     {
