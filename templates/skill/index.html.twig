@@ -17,7 +17,7 @@
                 <td>{{ skill.code }}</td>
                 <td>{{ skill.libelle }}</td>
                 <td>{{ skill.nbEtudiantsMax }}</td>
-                <td><a href="{{ path('home_show', {'id': skill.id}) }}">Afficher</a></td>
+                <td><a href="{{ path('skill_show', {'id': skill.id}) }}">Afficher</a></td>
             </tr>
         {% endfor %}
     </table>

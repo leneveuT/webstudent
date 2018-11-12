@@ -9,7 +9,7 @@ use App\Entity\Skill;
 class SkillController extends AbstractController
 {
     /**
-     * @Route("/skills", name="skills")
+     * @Route("/skills", name="skill")
      */
     public function index()
     {
@@ -17,6 +17,20 @@ class SkillController extends AbstractController
         $skills = $repository->findAll();
         return $this->render('skill/index.html.twig', [
             'skills' => $skills
+        ]);
+    }
+
+    /**
+     * @Route("/skills/{id}", name="skill_show")
+     */
+    public function show($id)
+    {
+        $skill = $this->getDoctrine()
+            ->getRepository(Skill::class)
+            ->find($id);
+
+        return $this->render('skill/show.html.twig', [
+            'skill' => $skill
         ]);
     }
 }
