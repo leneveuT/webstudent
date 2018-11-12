@@ -21,6 +21,25 @@ class SkillController extends AbstractController
     }
 
     /**
+     * @Route("/skills/new", name="skill_new")
+     */
+    public function new()
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+
+        $skill = new Skill();
+        $skill->setCode('POT');
+        $skill->setLibelle('Potions');
+        $skill->setNbEtudiantsMax(12);
+
+        $entityManager->persist($skill);
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('skill_show', array('id' => $skill->getId()));
+    }
+
+    /**
      * @Route("/skills/{id}", name="skill_show")
      */
     public function show($id)
