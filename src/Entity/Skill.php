@@ -38,9 +38,15 @@ class Skill
      */
     private $professeurs;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="skil")
+     */
+    private $notes;
+
     public function __construct()
     {
         $this->professeurs = new ArrayCollection();
+        $this->notes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -105,6 +111,37 @@ class Skill
     {
         if ($this->professeurs->contains($professeur)) {
             $this->professeurs->removeElement($professeur);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Note[]
+     */
+    public function getNotes(): Collection
+    {
+        return $this->notes;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->notes->contains($note)) {
+            $this->notes[] = $note;
+            $note->setSkil($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->notes->contains($note)) {
+            $this->notes->removeElement($note);
+            // set the owning side to null (unless already changed)
+            if ($note->getSkil() === $this) {
+                $note->setSkil(null);
+            }
         }
 
         return $this;
