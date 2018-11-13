@@ -17,4 +17,22 @@
             <td>{{ home.name }}</td>
         </tr>
     </table>
+    <table >
+	   <tr>
+      <td>id</td>
+      <td>Nom</td>
+      <td>Prénom</td>
+      <td>Date de naissance</td>
+      <td>ville</td>
+     </tr>
+	    {% for etudiant in home.etudiants %}
+	     <tr>
+  			<td><a href="{{ path('etudiant_show', { 'id': etudiant.id }) }}">{{ etudiant.id }}</a></td>
+        <td>{{ etudiant.prenom }}</td>
+  			<td>{{ etudiant.nom }}</td>
+  			<td>{{ etudiant.dateNaiss|date('d/m/Y') }}</td>
+  			<td>{{ etudiant.ville}}</td>
+			</tr>
+	   {% endfor %}
+    </table
 {% endblock %}
