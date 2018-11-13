@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,6 +32,16 @@ class Skill
      * @ORM\Column(type="integer")
      */
     private $nb_etudiants_max;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Professeur", inversedBy="skills")
+     */
+    private $professeurs;
+
+    public function __construct()
+    {
+        $this->professeurs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,6 +80,32 @@ class Skill
     public function setNbEtudiantsMax(int $nb_etudiants_max): self
     {
         $this->nb_etudiants_max = $nb_etudiants_max;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Professeur[]
+     */
+    public function getProfesseurs(): Collection
+    {
+        return $this->professeurs;
+    }
+
+    public function addProfesseur(Professeur $professeur): self
+    {
+        if (!$this->professeurs->contains($professeur)) {
+            $this->professeurs[] = $professeur;
+        }
+
+        return $this;
+    }
+
+    public function removeProfesseur(Professeur $professeur): self
+    {
+        if ($this->professeurs->contains($professeur)) {
+            $this->professeurs->removeElement($professeur);
+        }
 
         return $this;
     }
