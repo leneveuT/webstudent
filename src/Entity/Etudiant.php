@@ -61,6 +61,11 @@ class Etudiant
      */
     private $photo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Home", inversedBy="etudiants")
+     */
+    private $home;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -170,6 +175,18 @@ class Etudiant
     public function setPhoto(string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getHome(): ?Home
+    {
+        return $this->home;
+    }
+
+    public function setHome(?Home $home): self
+    {
+        $this->home = $home;
 
         return $this;
     }
