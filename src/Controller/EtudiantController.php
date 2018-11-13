@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Etudiant;
+use App\Entity\Home;
 
 class EtudiantController extends AbstractController
 {
@@ -49,6 +50,9 @@ class EtudiantController extends AbstractController
 
 	}
 
+  /**
+   * @Route("/etudiant/consulter/{id}", name="etudiant_show")
+   */
   public function consulterEtudiant($id){
 
 		$etudiant = $this->getDoctrine()
@@ -72,4 +76,46 @@ class EtudiantController extends AbstractController
 		return $this->render('etudiant/lister.html.twig', [
             'etudiants' => $etudiants,]);
   }
+
+  /**
+   * @Route("/etudiant/edit/{id}", name="etudiant_edit")
+   */
+   public function edit($id)
+   {
+     //récupération de l'étudiant dont l'id est passé en paramètre
+  		$etudiant = $this->getDoctrine()
+          ->getRepository(Etudiant::class)
+          ->find($id);
+
+  		if (!$etudiant) {
+  			throw $this->createNotFoundException(
+              'Aucun etudiant trouvé avec le numéro '.$id
+  			);
+  		}
+  		else
+  		{
+        // récupération de la maison des griffondor à partir du code de la maison
+    		$home = $this->getDoctrine()
+            ->getRepository(Home::class)
+            ->findOneByCode('GFD');
+
+    		if (!$home) {
+    			throw $this->createNotFoundException(
+                'Aucune maison trouvé avec ce nom'
+    			);
+    		}
+    		else
+    		{
+          //Affectation de la maison à l'étudiant
+		      $etudiant->setHome($home);
+
+		      // persistence de l'objet modifié
+          $entityManager = $this->getDoctrine()->getManager();
+		      $entityManager->persist($etudiant);
+		      $entityManager->flush();
+
+		      return $this->redirectToRoute('etudiant_show', array('id' => $etudiant->getId()));
+        }
+      }
+   }
 }

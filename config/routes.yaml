@@ -9,10 +9,6 @@ etudiantAjouter:
     path: /etudiant/ajouter
     controller: App\Controller\EtudiantController::ajouterEtudiant
 
-etudiantConsulter:
-    path: /etudiant/consulter/{id}
-    controller: App\Controller\EtudiantController::consulterEtudiant
-
 etudiantLister:
     path: /etudiant/lister
     controller: App\Controller\EtudiantController::listerEtudiant
