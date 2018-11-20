@@ -7,6 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Etudiant;
 use App\Entity\Home;
 use App\Form\EtudiantType;
+use App\Form\EtudiantModifierType;
 use Symfony\Component\HttpFoundation\Request;
 
 class EtudiantController extends AbstractController
@@ -76,7 +77,7 @@ class EtudiantController extends AbstractController
   /**
    * @Route("/etudiant/edit/{id}", name="etudiant_edit")
    */
-   public function edit($id)
+   public function edit($id, Request $request)
    {
      //récupération de l'étudiant dont l'id est passé en paramètre
   		$etudiant = $this->getDoctrine()
@@ -90,28 +91,22 @@ class EtudiantController extends AbstractController
   		}
   		else
   		{
-        // récupération de la maison des griffondor à partir du code de la maison
-    		$home = $this->getDoctrine()
-            ->getRepository(Home::class)
-            ->findOneByCode('GFD');
+        $form = $this->createForm(EtudiantModifierType::class, $etudiant);
 
-    		if (!$home) {
-    			throw $this->createNotFoundException(
-                'Aucune maison trouvé avec ce nom'
-    			);
-    		}
-    		else
-    		{
-          //Affectation de la maison à l'étudiant
-		      $etudiant->setHome($home);
+        $form->handleRequest($request);
 
-		      // persistence de l'objet modifié
-          $entityManager = $this->getDoctrine()->getManager();
-		      $entityManager->persist($etudiant);
-		      $entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
 
-		      return $this->redirectToRoute('etudiant_show', array('id' => $etudiant->getId()));
+                 $etudiant = $form->getData();
+                 $entityManager = $this->getDoctrine()->getManager();
+                 $entityManager->persist($etudiant);
+                 $entityManager->flush();
+
+                 return $this->redirectToRoute('etudiant_show', array('id' => $etudiant->getId()));
         }
+
+          return $this->render('etudiant/ajouter.html.twig', array('form' => $form->createView(),));
+
       }
    }
 }
