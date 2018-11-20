@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Etudiant;
 use App\Entity\Home;
+use App\Form\EtudiantType;
+use Symfony\Component\HttpFoundation\Request;
 
 class EtudiantController extends AbstractController
 {
@@ -21,33 +23,27 @@ class EtudiantController extends AbstractController
       ]);
     }
 
-    public function ajouterEtudiant(){
+    public function ajouterEtudiant(Request $request)
+    {
+      $etudiant = new Etudiant();
 
-      // récupère le manager d'entités
-       $entityManager = $this->getDoctrine()->getManager();
+      $form = $this->createForm(EtudiantType::class, $etudiant);
 
-       // instanciation d'un objet Etudiant
-       $etudiant = new Etudiant();
-       $etudiant->setNom('Potter');
-       $etudiant->setPrenom('Harry');
-       //$etudiant->setDateNaiss('1980-07-31');
-       $etudiant->setNumRue('4');
-       $etudiant->setRue('Privet Drive');
-       $etudiant->setCoPos('50107');
-       $etudiant->setVille('Surrey');
-       $etudiant->setSurnom('Le ballafré');
-       $etudiant->setPhoto('harry');
+      $form->handleRequest($request);
 
-       // Indique à Doctrine de persister l'objet
-       $entityManager->persist($etudiant);
+       if ($form->isSubmitted() && $form->isValid()) {
+          $etudiant = $form->getData();
 
-       // Exécue l'instruction sql permettant de persister lobjet, ici un INSERT INTO
-       $entityManager->flush();
+          $entityManager = $this->getDoctrine()->getManager();
+          $entityManager->persist($etudiant);
+          $entityManager->flush();
 
-       // renvoie vers la vue de consultation de l'étudiant en passant l'objet etudiant en paramètre
-      return $this->render('etudiant/consulter.html.twig', [
-           'etudiant' => $etudiant,]);
+          return $this->redirectToRoute('etudiant_show', array('id' => $etudiant->getId()));
+       };
 
+       return $this->render('etudiant/ajouter.html.twig', array(
+         'form' => $form->createView()
+       ));
 	}
 
   /**
