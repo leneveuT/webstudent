@@ -48,17 +48,17 @@ class Etudiant
     private $ville;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @ORM\Column(type="string", length=20, nullable=true)
      */
     private $numRue;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $rue;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $coPos;
 
