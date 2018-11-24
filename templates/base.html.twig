@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/semantic.min.css') }}">
 
         {% block stylesheets %}{% endblock %}
     </head>
@@ -15,14 +15,14 @@
         <a class="item">
           Etudiants
         </a>
-        
+
         </div>
         <div class="ui container">
           {% block body %}{% endblock %}
           {% block javascripts %}{% endblock %}
         </div>
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/semantic.min.js') }}"></script>
     </body>
 </html>
