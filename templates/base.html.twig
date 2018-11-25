@@ -36,6 +36,13 @@
             <div class="item"><a href="{{ path('skill_new') }}">Ajouter</a></div>
           </div>
         </div>
+        <div class="ui dropdown item">
+          Professeurs
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item"><a href="{{ path('professeur_index') }}">Liste</a></div>
+          </div>
+        </div>
       </div>
         <div class="ui container">
           {% block body %}{% endblock %}
