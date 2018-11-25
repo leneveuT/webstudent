@@ -3,13 +3,15 @@
 {% block title %}Maisons{% endblock %}
 
 {% block body %}
-    <table>
+    <table class="ui celled table">
+      <thead>
         <tr>
             <th>id</th>
             <th>code</th>
             <th>nom</th>
             <th></th>
         </tr>
+      </thead>
         {% for home in homes %}
             <tr>
                 <td>{{ home.id }}</td>
