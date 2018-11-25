@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Skill;
+use App\Form\SkillType;
 
 class SkillController extends AbstractController
 {
@@ -23,20 +25,26 @@ class SkillController extends AbstractController
     /**
      * @Route("/skills/new", name="skill_new")
      */
-    public function new()
+    public function new(Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+      $skill = new Skill();
 
-        $skill = new Skill();
-        $skill->setCode('POT');
-        $skill->setLibelle('Potions');
-        $skill->setNbEtudiantsMax(12);
+      $form = $this->createForm(SkillType::class, $skill);
+      $form->handleRequest($request);
 
-        $entityManager->persist($skill);
+      if ($form->isSubmitted() && $form->isValid()) {
+         $skill = $form->getData();
 
-        $entityManager->flush();
+         $entityManager = $this->getDoctrine()->getManager();
+         $entityManager->persist($skill);
+         $entityManager->flush();
 
-        return $this->redirectToRoute('skill_show', array('id' => $skill->getId()));
+         return $this->redirectToRoute('skill_show', array('id' => $skill->getId()));
+      };
+
+      return $this->render('skill/new.html.twig', [
+          'form' => $form->createView()
+      ]);
     }
 
     /**
