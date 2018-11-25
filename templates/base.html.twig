@@ -20,7 +20,22 @@
             <div class="item"><a href="{{ path('etudiantAjouter') }}">Ajouter</a></div>
           </div>
         </div>
-
+        <div class="ui dropdown item">
+          Maisons
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item"><a href="{{ path('home') }}">Liste</a></div>
+            <div class="item"><a href="{{ path('home_new') }}">Ajouter</a></div>
+          </div>
+        </div>
+        <div class="ui dropdown item">
+          Compétences
+          <i class="dropdown icon"></i>
+          <div class="menu">
+            <div class="item"><a href="{{ path('skill') }}">Liste</a></div>
+            <div class="item"><a href="{{ path('skill_new') }}">Ajouter</a></div>
+          </div>
+        </div>
       </div>
         <div class="ui container">
           {% block body %}{% endblock %}
