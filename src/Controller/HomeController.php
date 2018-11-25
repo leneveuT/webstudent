@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Home;
+use App\Form\HomeType;
 
 class HomeController extends AbstractController
 {
@@ -22,21 +24,28 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/homes/new", name="home_new")
+     * @Route("/home/new", name="home_new")
      */
-    public function new()
+    public function new(Request $request)
     {
-        $entityManager = $this->getDoctrine()->getManager();
+      $home = new Home();
 
-        $home = new Home();
-        $home->setCode('SPT');
-        $home->setName("Serpentard");
+      $form = $this->createForm(HomeType::class, $home);
+      $form->handleRequest($request);
 
-        $entityManager->persist($home);
+      if ($form->isSubmitted() && $form->isValid()) {
+         $home = $form->getData();
 
-        $entityManager->flush();
+         $entityManager = $this->getDoctrine()->getManager();
+         $entityManager->persist($home);
+         $entityManager->flush();
 
-        return $this->redirectToRoute('home_show', array('id' => $home->getId()));
+         return $this->redirectToRoute('home_show', array('id' => $home->getId()));
+      };
+
+      return $this->render('home/new.html.twig', [
+          'form' => $form->createView()
+      ]);
     }
 
     /**
