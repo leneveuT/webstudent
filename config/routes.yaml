@@ -10,5 +10,5 @@ etudiantAjouter:
     controller: App\Controller\EtudiantController::ajouterEtudiant
 
 etudiantLister:
-    path: /etudiant/lister
+    path: /
     controller: App\Controller\EtudiantController::listerEtudiant

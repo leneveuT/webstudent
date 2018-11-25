@@ -5,7 +5,8 @@
       {% for etudiant in etudiants %}
   <div class="card">
     <div class="image">
-      <img src="../img/etudiant/{{ etudiant.photo }}.jpg">
+      {% set photo = 'img/etudiant/'~ etudiant.photo ~'.jpg' %}
+      <img src="{{ asset(photo) }}">
     </div>
     <div class="content">
       <div class="header"><a href="{{ path('etudiant_show', {'id': etudiant.id}) }}">{{ etudiant.prenom }} {{ etudiant.nom }}</a></div>
