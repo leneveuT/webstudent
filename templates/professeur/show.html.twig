@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ professeur.prenom }} {{ professeur.nom }}{% endblock %}
+
+{% block body %}
+  <table>
+     <tbody>
+         <tr>
+             <th>Id</th>
+             <td>{{ professeur.id }}</td>
+         </tr>
+         <tr>
+             <th>Prenom</th>
+             <td>{{ professeur.prenom }}</td>
+         </tr>
+         <tr>
+             <th>Nom</th>
+             <td>{{ professeur.nom }}</td>
+         </tr>
+         <tr>
+             <th>Date de naissance</th>
+             <td>{{ professeur.dateNaiss|date("d/m/Y") }}</td>
+         </tr>
+     </tbody>
+  </table>
+{% endblock %}

@@ -10,6 +10,7 @@
           <th>nom</th>
           <th>prenom</th>
           <th>date de naissance</th>
+          <th></th>
       </tr>
     </thead>
       {% for professeur in professeurs %}
@@ -18,6 +19,7 @@
               <td>{{ professeur.nom }}</td>
               <td>{{ professeur.prenom }}</td>
               <td>{{ professeur.dateNaiss|date("d/m/Y") }}</td>
+              <td><a href="{{ path('professeur_show', {'id': professeur.id}) }}">Afficher</a></td>
           </tr>
       {% endfor %}
   </table>
