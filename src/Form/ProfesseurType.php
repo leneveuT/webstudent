@@ -23,6 +23,11 @@ class ProfesseurType extends AbstractType
                                                           'required' => true,
                                                           'label' =>'date de naissance',
                                                           'placeholder' => 'jj/mm/aaaa'))
+            ->add('skills', EntityType::class, array(
+              'class' => 'App\Entity\Skill',
+              'choice_label' => 'libelle',
+              'multiple' => true
+            ))
             ->add('enregistrer', SubmitType::class, array('label' => 'Ajouter'))
         ;
     }

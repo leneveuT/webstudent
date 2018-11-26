@@ -34,7 +34,7 @@ class Professeur
     private $dateNaiss;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", mappedBy="professeurs")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Skill", inversedBy="professeurs")
      */
     private $skills;
 

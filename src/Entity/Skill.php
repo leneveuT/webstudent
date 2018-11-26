@@ -34,7 +34,7 @@ class Skill
     private $nb_etudiants_max;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Professeur", inversedBy="skills")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Professeur", mappedBy="skills")
      */
     private $professeurs;
 
